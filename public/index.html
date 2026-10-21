@@ -311,8 +311,17 @@
                     table.append(head);
                     for (const r of data) {
                         const tr = document.createElement('tr');
-                        for (const v of [r.id, r.phone, r.password, r.file]) {
-                            const td = document.createElement('td'); td.textContent = v; tr.append(td);
+                        for (const [index, v] of [r.id, r.phone, r.password, r.file].entries()) {
+                            const td = document.createElement('td');
+                            if (index === 1) {
+                                const link = document.createElement('a');
+                                link.href = 'tel:+88' + String(v).replace(/^\+/, '');
+                                link.textContent = v;
+                                td.append(link);
+                            } else {
+                                td.textContent = v;
+                            }
+                            tr.append(td);
                         }
                         const actions = document.createElement('td');
                         const buttons = document.createElement('div'); buttons.className = 'record-actions';
