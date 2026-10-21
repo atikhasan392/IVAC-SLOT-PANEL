@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>INDIAN VISA APPLICATION SLOT PANEL</title>
+        <link rel="shortcut icon" href="https://ivacbd.com/images/favicon.ico" type="image/x-icon">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+        <style>
+            :root {
+                color: #e8edf7;
+                background: #0c1220;
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: "JetBrains Mono", monospace;
+            }
+
+            [hidden] { display: none !important; }
+
+            body {
+                margin: 0;
+                padding: 36px 16px;
+            }
+
+            .wrap {
+                margin: auto;
+                max-width: 850px;
+            }
+
+            h1 {
+                font-size: 30px;
+            }
+
+            p {
+                color: #a7b3c8;
+                font-size: small;
+            }
+
+            a {
+                color: #a7b3c8;
+            }
+
+            .card {
+                padding: 20px;
+                margin-top: 24px;
+                background: #151e30;
+                border: 1px solid #2a3850;
+                box-shadow: 0 10px 35px #0002;
+            }
+
+            .fields {
+                gap: 16px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            label {
+                display: block;
+                margin: 0 0 7px;
+                font-weight: 600
+            }
+
+            input {
+                width: 100%;
+                padding: 10px;
+                color: white;
+                font-size: 16px;
+                background: #0c1423;
+                border: 1px solid #40516a;
+            }
+
+            .drop {
+                cursor: pointer;
+                margin: 22px 0;
+                padding: 32px 15px;
+                text-align: center;
+                border: 2px dashed #6479a0;
+            }
+
+            .drop.over {
+                background: #263a57;
+            }
+
+            .drop strong {
+                color: #9fc5ff;
+            }
+
+            button {
+                gap: 6px;
+                border: 0;
+                display: flex;
+                color: white;
+                cursor: pointer;
+                font-weight: 700;
+                padding: 13px 20px;
+                align-items: center;
+                background: #4c8dff;
+            }
+
+            button:disabled {
+                opacity: .55;
+                cursor: wait
+            }
+
+            .file {
+                gap: 12px;
+                cursor: grab;
+                display: flex;
+                padding: 12px;
+                margin: 8px 0;
+                align-items: center;
+                background: #202d42;
+                border: 1px solid #344761;
+            }
+
+            .file.dragging {
+                opacity: .4
+            }
+
+            .file .name {
+                flex: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap
+            }
+
+            .file small {
+                color: #a7b3c8
+            }
+
+            .file button {
+                padding: 6px 10px;
+                background: #533448
+            }
+
+            .status {
+                min-height: 24px;
+                margin-top: 15px
+            }
+
+            .error {
+                color: #ff9292
+            }
+
+            .success {
+                color: #7ee3ad
+            }
+
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 15px
+            }
+
+            th,
+            td {
+                text-align: left;
+                padding: 12px;
+                border-bottom: 1px solid #304059
+            }
+
+            th {
+                color: #a7b3c8
+            }
+
+            #records { overflow-x: auto; }
+            .record-actions { display: flex; gap: 6px; }
+            .record-actions button { padding: 6px 10px; background: #533448; }
+
+            .empty {
+                color: #a7b3c8
+            }
+
+            footer {
+                margin-top: 20px;
+                color: #7f8ca2;
+                font-size: 13px
+            }
+
+            @media(max-width:600px) {
+                .fields {
+                    grid-template-columns: 1fr
+                }
+
+                .card {
+                    padding: 17px
+                }
+
+                body {
+                    padding: 20px 10px
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <main class="wrap">
+            <h1>INDIAN VISA APPLICATION SLOT PANEL</h1>
+            <p>Version 2.12.17</p>
+            <section class="card">
+                <form id="form">
+                    <div class="fields">
+                        <div><label for="phone">PHONE</label><input id="phone" type="tel" placeholder="01712345678" autocomplete="off" required pattern="\+?[0-9]{7,15}"></div>
+                        <div><label for="password">PASSWORD</label><input id="password" type="text" placeholder="******" autocomplete="off" required></div>
+                    </div>
+                    <div class="drop" id="drop" tabindex="0" role="button">
+                        <strong>CHOOSE PDF FILES</strong> OR DRAG THEM HERE
+                        <p>Maximum 20 files, 20 MB each</p>
+                    </div>
+                    <input type="file" id="picker" accept=".pdf,application/pdf" multiple hidden>
+                    <div id="files"></div>
+                    <button id="submit" type="submit">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg"><path d='M16.25 21v-4.765a1.59 1.59 0 0 0-1.594-1.588H9.344a1.59 1.59 0 0 0-1.594 1.588V21m8.5-17.715v2.362a1.59 1.59 0 0 1-1.594 1.588H9.344A1.59 1.59 0 0 1 7.75 5.647V3m0 0H6.688A3.18 3.18 0 0 0 3.5 6.176v11.647A3.18 3.18 0 0 0 6.688 21h10.625a3.18 3.18 0 0 0 3.187-3.177V8.551a3.17 3.17 0 0 0-.934-2.246L17.184 3.93A3.2 3.2 0 0 0 14.93 3z'/></svg>
+                        <span>SAVE FILE</span>
+                    </button>
+                    <div class="status" id="status" role="status"></div>
+                </form>
+            </section>
+            <section class="card">
+                <h2>SLOT DATA</h2>
+                <div id="records" class="empty">Loading...</div>
+            </section>
+            <footer>Copyright &copy; 2026. Developed By <a href="https://atikhasan.com" target="_blank">ATik HaSan</a>.</footer>
+        </main>
+        <script>
+            const selected = []; const picker = document.querySelector('#picker'), drop = document.querySelector('#drop'), list = document.querySelector('#files'), status = document.querySelector('#status'), submit = document.querySelector('#submit');
+            let busy = false, nextFileId = 0;
+            function fileItem(file) { return { id: String(++nextFileId), file }; }
+            function setBusy(value) {
+                busy = value;
+                document.querySelectorAll('#form input, #form button, #records button').forEach(el => { el.disabled = value; });
+                drop.setAttribute('aria-disabled', String(value));
+            }
+            function validFile(file) {
+                if (!file.name.toLowerCase().endsWith('.pdf')) { message('Only PDF files are allowed', true); return false; }
+                if (file.size > 20 * 1024 * 1024) { message('File exceeds 20 MB', true); return false; }
+                return true;
+            }
+            function resetForm() {
+                selected.length = 0; render(); document.querySelector('#form').reset();
+            }
+            function addFiles(items) {
+                if (busy) return;
+                for (const file of items) {
+                    if (!validFile(file)) continue;
+                    if (selected.length >= 20) { message('Maximum 20 files', true); break; }
+                    selected.push(fileItem(file));
+                }
+                render();
+            }
+            function message(t, error = false) { status.textContent = t; status.className = 'status ' + (error ? 'error' : 'success') }
+            function render() {
+                list.replaceChildren();
+                selected.forEach((item, i) => {
+                    const el = document.createElement('div'); el.className = 'file'; el.draggable = true; el.dataset.id = item.id;
+                    const number = document.createElement('strong'); number.textContent = `${i + 1}.pdf`;
+                    const name = document.createElement('span'); name.className = 'name'; name.textContent = item.file.name;
+                    const size = document.createElement('small'); size.textContent = (item.file.size / 1024 / 1024).toFixed(2) + ' MB';
+                    el.append(number, name, size);
+                    const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = 'REMOVE'; remove.disabled = busy;
+                    remove.onclick = () => { if (busy) return; selected.splice(i, 1); render(); };
+                    el.append(remove);
+                    el.addEventListener('dragstart', e => {
+                        if (busy) { e.preventDefault(); return; }
+                        e.dataTransfer.setData('text/plain', item.id); el.classList.add('dragging');
+                    });
+                    el.addEventListener('dragend', () => el.classList.remove('dragging'));
+                    el.addEventListener('dragover', e => e.preventDefault());
+                    el.addEventListener('drop', e => {
+                        e.preventDefault(); e.stopPropagation(); if (busy) return;
+                        const from = selected.findIndex(x => x.id === e.dataTransfer.getData('text/plain'));
+                        const to = selected.findIndex(x => x.id === item.id);
+                        if (from < 0 || to < 0) return;
+                        selected.splice(to, 0, selected.splice(from, 1)[0]); render();
+                    });
+                    list.append(el);
+                });
+            }
+            drop.onclick = () => { if (!busy) picker.click(); };
+            drop.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); if (!busy) picker.click(); } };
+            picker.onchange = () => { addFiles(picker.files); picker.value = ''; };
+            drop.ondragover = e => { e.preventDefault(); if (!busy) drop.classList.add('over'); };
+            drop.ondragleave = () => drop.classList.remove('over');
+            drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); addFiles(e.dataTransfer.files); };
+            async function deleteRecord(record) {
+                const response = await fetch('/api/records/' + encodeURIComponent(record.id), {
+                    method: 'DELETE'
+                });
+                const result = await response.json();
+                if (!response.ok) throw Error(result.error || 'Request failed');
+            }
+            async function loadRecords() {
+                const container = document.querySelector('#records');
+                try {
+                    const response = await fetch('/api/records', { cache: 'no-store' });
+                    if (!response.ok) throw Error();
+                    const data = await response.json();
+                    if (!data.length) { container.textContent = 'No folders yet'; return }
+                    const table = document.createElement('table');
+                    const head = document.createElement('tr');
+                    for (const t of ['DIRECTORY', 'PHONE', 'PASSWORD', "PDF", 'DELETE']) {
+                        const th = document.createElement('th'); th.textContent = t; head.append(th);
+                    }
+                    table.append(head);
+                    for (const r of data) {
+                        const tr = document.createElement('tr');
+                        for (const v of [r.id, r.phone, r.password, r.file]) {
+                            const td = document.createElement('td'); td.textContent = v; tr.append(td);
+                        }
+                        const actions = document.createElement('td');
+                        const buttons = document.createElement('div'); buttons.className = 'record-actions';
+                        const remove = document.createElement('button'); remove.type = 'button'; remove.disabled = busy;
+                        remove.setAttribute('aria-label', 'Delete slot ' + r.id); remove.title = 'DELETE';
+                        remove.innerHTML = `<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><path d='m18 9-.84 8.398c-.127 1.273-.19 1.909-.48 2.39a2.5 2.5 0 0 1-1.075.973C15.098 21 14.46 21 13.18 21h-2.36c-1.279 0-1.918 0-2.425-.24a2.5 2.5 0 0 1-1.076-.973c-.288-.48-.352-1.116-.48-2.389L6 9m7.5 6.5v-5m-3 5v-5m-6-4h4.615m0 0 .386-2.672c.112-.486.516-.828.98-.828h3.038c.464 0 .867.342.98.828l.386 2.672m-5.77 0h5.77m0 0H19.5'/></svg> DELETE`;
+                        remove.onclick = async () => {
+                            if (busy) return;
+                            if (!confirm(`Delete slot ${r.id} and its PDF files?`)) return;
+                            setBusy(true);
+                            try { await deleteRecord(r); message('Slot data deleted'); await loadRecords() }
+                            catch (error) { message(error.message, true) }
+                            finally { setBusy(false); }
+                        };
+                        buttons.append(remove); actions.append(buttons); tr.append(actions); table.append(tr);
+                    }
+                    container.replaceChildren(table);
+                } catch { container.textContent = 'Could not load folders' }
+            }
+            document.querySelector('#form').onsubmit = async e => {
+                e.preventDefault(); if (busy) return;
+                if (!selected.length) return message('Add at least one PDF', true);
+                setBusy(true); message('Saving...');
+                const data = new FormData();
+                data.append('phone', document.querySelector('#phone').value.trim()); data.append('password', document.querySelector('#password').value);
+                selected.forEach(x => data.append('files', x.file, x.file.name));
+                try {
+                    const response = await fetch('/api/upload', { method: 'POST', body: data });
+                    const result = await response.json(); if (!response.ok) throw Error(result.error || 'Save failed');
+                    resetForm(); message('Saved ' + result.file + ' PDFs in folder ' + result.id); await loadRecords();
+                } catch (error) { message(error.message, true) }
+                finally { setBusy(false); }
+            }; loadRecords();
+        </script>
+    </body>
+</html>

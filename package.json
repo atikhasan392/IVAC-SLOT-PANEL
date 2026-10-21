@@ -1,0 +1,27 @@
+{
+    "name": "ivac-slot-panel",
+    "version": "1.0.0",
+    "description": "Requirements: Node.js 22+",
+    "private": true,
+    "license": "UNLICENSED",
+    "author": {
+        "name": "ATik HaSan",
+        "email": "me@atikhasan.com",
+        "url": "https://atikhasan.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/atikhasan392/ivac-slot-panel.git"
+    },
+    "type": "commonjs",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js",
+        "dev": "node --watch server.js"
+    },
+    "dependencies": {
+        "express": "^5.3.0",
+        "multer": "^2.4.0",
+        "pdf-lib": "^1.17.1"
+    }
+}
